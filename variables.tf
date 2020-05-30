@@ -11,12 +11,108 @@
 # These variables must be set when using this module.
 # ------------------------------------------------------------------------------
 
+variable "assume_role_policy" {
+  type        = string
+  description = "(Required if assume_role_principals is not set) The policy that grants an entity permission to assume the role."
+  default     = null
+}
+
+variable "assume_role_principals" {
+  type = set(object({
+    type        = string
+    identifiers = list(string)
+  }))
+  description = "(Required if assume_role_policy is not set) Principals for the assume role policy."
+  default     = null
+}
+
+variable "assume_role_conditions" {
+  type = set(object({
+    test     = string
+    variable = string
+    values   = list(string)
+  }))
+  description = "(Optional) Conditions for the assume role policy."
+  default     = null
+}
+
 
 # ------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These variables have defaults, but may be overridden.
 # ------------------------------------------------------------------------------
 
+variable "name" {
+  type        = string
+  description = "(Optional, Forces new resource) The name of the role. If omitted, Terraform will assign a random, unique name."
+  default     = null
+}
+
+variable "name_prefix" {
+  type        = string
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  default     = null
+}
+
+variable "force_detach_policies" {
+  type        = bool
+  description = "(Optional) Specifies to force detaching any policies the role has before destroying it. Defaults to false."
+  default     = false
+}
+
+variable "path" {
+  type        = string
+  description = "(Optional) The path to the role. See IAM Identifiers for more information."
+  default     = "/"
+}
+
+variable "description" {
+  type        = string
+  description = "(Optional) The description of the role."
+  default     = ""
+}
+
+variable "max_session_duration" {
+  type        = number
+  description = "(Optional) The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours."
+  default     = 1
+}
+
+variable "permissions_boundary" {
+  type        = string
+  description = "(Optional) The ARN of the policy that is used to set the permissions boundary for the role."
+  default     = null
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Key-value map of tags for the IAM role"
+  default     = {}
+}
+
+variable "policy_statements" {
+  type        = list(any)
+  description = "(Optional) List of IAM policy statements to attach to the User as an inline policy."
+  default     = []
+}
+
+variable "policy_name" {
+  type        = string
+  description = "(Optional) The name of the role policy. If omitted, Terraform will assign a random, unique name."
+  default     = null
+}
+
+variable "policy_name_prefix" {
+  type        = string
+  description = "(Optional) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  default     = null
+}
+
+variable "policy_arns" {
+  type        = list(string)
+  description = "(Optional) List of IAM custom or managed policies ARNs to attach to the User."
+  default     = []
+}
 
 # ------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
