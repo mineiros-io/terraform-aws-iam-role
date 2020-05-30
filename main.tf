@@ -1,7 +1,19 @@
 # ------------------------------------------------------------------------------
-# THIS IS A UPPERCASE MAIN HEADLINE
-# And it continues with some lowercase information about the module
-# We might add more than one line for additional information
+# AWS Identity and Access Management (IAM)
+# ------------------------------------------------------------------------------
+# IAM ROLES
+# ------------------------------------------------------------------------------
+# An IAM role is an IAM identity that you can create in your account that has
+# specific permissions.
+#
+# AWS Documentation IAM:
+#   - Roles:    https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
+#   - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
+#
+# Terraform AWS Provider Documentation:
+#   - https://www.terraform.io/docs/providers/aws/r/iam_role.html
+#   - https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
+#   - https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
 # ------------------------------------------------------------------------------
 
 resource "aws_iam_role" "role" {
