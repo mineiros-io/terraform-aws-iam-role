@@ -128,7 +128,7 @@ resource "aws_iam_role_policy" "policy" {
 }
 
 # Attach custom or managed policies
-resource "aws_iam_role_policy_attachment" "policy" {
+resource "aws_iam_role_policy_attachment" "policy_attachment" {
   count = var.module_enabled ? length(var.policy_arns) : 0
 
   role       = aws_iam_role.role[0]

@@ -28,20 +28,28 @@ In contrast to the plain `aws_iam_role` resource this module simplifies adding I
   Create an IAM role.
 
 - **Extended Module Features**:
-  Create an inline IAM policy, Attach custom or AWS managed policies.
+  Create an inline IAM policy, Attach custom or AWS managed policies. Create an IAM instance profile.
 
 ## Getting Started
-- WIP
-<!--
-Most basic usage...
+Basic usage:
 
 ```hcl
-module "resource" {
-  source  = "mineiros-io/resource/provider"
-  version = "~> 0.0.0"
+module "role-s3-full-access" {
+  source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
+
+  name = "s3-full-access"
+
+  policy_statements = [
+    {
+      sid = "FullS3Access"
+
+      effect    = "Allow"
+      actions   = ["s3:*"]
+      resources = ["*"]
+    }
+  ]
 }
 ```
--->
 
 ## Module Argument Reference
 See
@@ -184,17 +192,22 @@ Path in which to create the profile. Default is `/`.
 
 ## Module Attributes Reference
 The following attributes are exported by the module:
-- None (WIP)
+- **`role`**: The `aws_iam_role` object.
+- **`policy`**: The `aws_iam_role_policy` object.
+- **`policy_attachment`**: The `aws_iam_role_policy_attachment` object.
+- **`instance_profile`**: The `aws_iam_instance_profile` object.
 
 ## External Documentation
 - AWS Documentation IAM:
   - Roles: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
   - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
+  - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
 
 - Terraform AWS Provider Documentation:
   - https://www.terraform.io/docs/providers/aws/r/iam_role.html
   - https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
   - https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
+  - https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
 
 ## Module Versioning
 This Module follows the principles of [Semantic Versioning (SemVer)](https://semver.org/).
