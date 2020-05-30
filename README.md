@@ -168,6 +168,20 @@ policy_statements = [
 ]
 ```
 
+###### Instance Profile
+- **`create_instance_profile`**: *(Optional `bool`)*
+Whether to create an instance profile.
+Default is `true` if `name` or `name_prefix` are set else `false`.
+
+- **`instance_profile_name`**: *(Optional `string`, Forces new resource)*
+The profile's name. If omitted, Terraform will assign a random, unique name.
+
+- **`instance_profile_name_prefix`**: *(Optional `string`, Forces new resource)*
+Creates a unique name beginning with the specified prefix. Conflicts with name.
+
+- **`instance_profile_path`**: *(Optional `string`)*
+Path in which to create the profile. Default is `/`.
+
 ## Module Attributes Reference
 The following attributes are exported by the module:
 - None (WIP)
