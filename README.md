@@ -31,13 +31,21 @@ In contrast to the plain `aws_iam_role` resource this module simplifies adding I
   Create an inline IAM policy, Attach custom or AWS managed policies. Create an IAM instance profile.
 
 ## Getting Started
-Basic usage:
+Basic usage to grant an AWS Account with Account ID `123456789012` access to assume a role that grants
+full access to AWS Simple Storage Service (S3)
 
 ```hcl
 module "role-s3-full-access" {
   source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
 
-  name = "s3-full-access"
+  name = "S3FullAccess"
+
+  assume_role_principals = [
+    {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::123456789012:root"]
+    }
+  ]
 
   policy_statements = [
     {
