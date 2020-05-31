@@ -1,31 +1,36 @@
 # ------------------------------------------------------------------------------
-# Example Setup
+# Provider Setup
 # ------------------------------------------------------------------------------
-
 provider "aws" {
   version = "~> 2.0"
-  region  = "eu-west-1"
+  region  = var.region
+}
+
+variable "region" {
+  type        = string
+  description = "The AWS region to run in. Default is 'eu-west-1'"
+  default     = "eu-west-1"
 }
 
 # ------------------------------------------------------------------------------
-# Example Usage
+# Example Usage: Create an Full S3 Access Instance Profile
 # ------------------------------------------------------------------------------
 module "instance-profile-s3-full-access" {
   source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
 
-  instance_profile_name = "true"
+  # name of the role
+  name = "S3FullAccess"
 
+  # name of the instance profile
+  instance_profile_name = "S3FullAcess"
+
+  # the policy granting access
   policy_statements = [
     {
-      sid = "FullS3Access"
+      sid = "S3FullAccess"
 
-      effect = "Allow"
-
-      actions     = ["s3:*"]
-      not_actions = []
-
-      resources     = ["*"]
-      not_resources = []
+      actions   = ["s3:*"]
+      resources = ["*"]
     }
   ]
 }
