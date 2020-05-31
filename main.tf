@@ -1,7 +1,21 @@
 # ------------------------------------------------------------------------------
-# THIS IS A UPPERCASE MAIN HEADLINE
-# And it continues with some lowercase information about the module
-# We might add more than one line for additional information
+# AWS Identity and Access Management (IAM)
+# ------------------------------------------------------------------------------
+# IAM ROLES
+# ------------------------------------------------------------------------------
+# An IAM role is an IAM identity that you can create in your account that has
+# specific permissions.
+#
+# AWS Documentation IAM:
+#   - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
+#   - https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
+#   - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
+#
+# Terraform AWS Provider Documentation:
+#   - https://www.terraform.io/docs/providers/aws/r/iam_role.html
+#   - https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
+#   - https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
+#   - https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
 # ------------------------------------------------------------------------------
 
 resource "aws_iam_role" "role" {
@@ -21,12 +35,26 @@ resource "aws_iam_role" "role" {
 }
 
 locals {
-  create_assume_role_policy = var.module_enabled && var.assume_role_policy == ""
-  assume_role_policy        = local.create_assume_role_policy ? data.aws_iam_policy_document.assume_role_policy[0] : var.assume_role_policy
+  # set defaults
+  _ec2_principles = [
+    { type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  ]
+  # compute defaults
+  _create_assume_role_policy = var.module_enabled && var.assume_role_policy == null
+  _assume_role_principals    = local.create_instance_profile ? local._ec2_principles : []
+  _create_instance_profile   = var.instance_profile_name != null || var.instance_profile_name_prefix != null
+
+  # translate variables to variables with defaults
+
+  create_instance_profile = var.create_instance_profile != null ? var.create_instance_profile : local._create_instance_profile
+  assume_role_policy      = local._create_assume_role_policy ? data.aws_iam_policy_document.assume_role_policy[0].json : var.assume_role_policy
+  assume_role_principals  = length(var.assume_role_principals) > 0 ? var.assume_role_principals : local._assume_role_principals
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
-  count = local.create_assume_role_policy ? 1 : 0
+  count = local._create_assume_role_policy ? 1 : 0
 
   statement {
     effect = "Allow"
@@ -36,7 +64,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
     ]
 
     dynamic "principals" {
-      for_each = var.assume_role_principals
+      for_each = local.assume_role_principals
 
       content {
         type        = principals.value.type
@@ -74,24 +102,6 @@ data "aws_iam_policy_document" "policy" {
       resources     = try(statement.value.resources, null)
       not_resources = try(statement.value.not_resources, null)
 
-      dynamic "principals" {
-        for_each = try(statement.value.principals, [])
-
-        content {
-          type        = principals.value.type
-          identifiers = principals.value.identifiers
-        }
-      }
-
-      dynamic "not_principals" {
-        for_each = try(statement.value.not_principals, [])
-
-        content {
-          type        = not_principals.value.type
-          identifiers = not_principals.value.identifiers
-        }
-      }
-
       dynamic "condition" {
         for_each = try(statement.value.conditions, [])
 
@@ -112,17 +122,29 @@ resource "aws_iam_role_policy" "policy" {
   name_prefix = var.policy_name_prefix
 
   policy = data.aws_iam_policy_document.policy[0].json
-  role   = aws_iam_role.role[0]
+  role   = aws_iam_role.role[0].name
 
   depends_on = [var.module_depends_on]
 }
 
 # Attach custom or managed policies
-resource "aws_iam_role_policy_attachment" "policy" {
+resource "aws_iam_role_policy_attachment" "policy_attachment" {
   count = var.module_enabled ? length(var.policy_arns) : 0
 
   role       = aws_iam_role.role[0]
   policy_arn = var.policy_arns[count.index]
+
+  depends_on = [var.module_depends_on]
+}
+
+resource "aws_iam_instance_profile" "instance_profile" {
+  count = var.module_enabled && local.create_instance_profile ? 1 : 0
+
+  name        = var.instance_profile_name
+  name_prefix = var.instance_profile_name_prefix
+  path        = var.instance_profile_path
+
+  role = aws_iam_role.role[0].name
 
   depends_on = [var.module_depends_on]
 }

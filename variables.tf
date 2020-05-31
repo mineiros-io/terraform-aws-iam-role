@@ -23,7 +23,7 @@ variable "assume_role_principals" {
     identifiers = list(string)
   }))
   description = "(Required if assume_role_policy is not set) Principals for the assume role policy."
-  default     = null
+  default     = []
 }
 
 variable "assume_role_conditions" {
@@ -33,7 +33,7 @@ variable "assume_role_conditions" {
     values   = list(string)
   }))
   description = "(Optional) Conditions for the assume role policy."
-  default     = null
+  default     = []
 }
 
 
@@ -74,8 +74,8 @@ variable "description" {
 
 variable "max_session_duration" {
   type        = number
-  description = "(Optional) The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 hours."
-  default     = 1
+  description = "(Optional) The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour (3600) to 12 hours (43200)."
+  default     = 3600
 }
 
 variable "permissions_boundary" {
@@ -89,6 +89,8 @@ variable "tags" {
   description = "Key-value map of tags for the IAM role"
   default     = {}
 }
+
+# inline policy
 
 variable "policy_statements" {
   type        = list(any)
@@ -108,10 +110,38 @@ variable "policy_name_prefix" {
   default     = null
 }
 
+# managed / custom policies
+
 variable "policy_arns" {
   type        = list(string)
   description = "(Optional) List of IAM custom or managed policies ARNs to attach to the User."
   default     = []
+}
+
+# instance profile
+
+variable "create_instance_profile" {
+  type        = bool
+  description = "(Optional) Whether to create an instance profile. Default is true if name or name_prefix are set else false."
+  default     = null
+}
+
+variable "instance_profile_name" {
+  type        = string
+  description = "(Optional, Forces new resource) The profile's name. If omitted, Terraform will assign a random, unique name."
+  default     = null
+}
+
+variable "instance_profile_name_prefix" {
+  type        = string
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
+  default     = null
+}
+
+variable "instance_profile_path" {
+  type        = string
+  description = "(Optional) Path in which to create the profile. Defaults to /"
+  default     = "/"
 }
 
 # ------------------------------------------------------------------------------
