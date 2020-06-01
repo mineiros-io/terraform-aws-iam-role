@@ -166,7 +166,7 @@ for details and use-cases.
 ###### Custom & Managed Policies
 - **`policy_arns`**: *(Optional `list(string)`)*
 
-  List of IAM custom or managed policies ARNs to attach to the User.
+  List of IAM custom or managed policies ARNs to attach to the role.
 
 ###### Inline Policiy
 - **`policy_name`**: *(Optional `string`)*
@@ -179,7 +179,7 @@ for details and use-cases.
 
 - **`policy_statements`**: *(Optional `list(statement)`)*
 
-  List of IAM policy statements to attach to the User as an inline policy.
+  List of IAM policy statements to attach to the role as an inline policy.
   ```hcl
   policy_statements = [
     {
