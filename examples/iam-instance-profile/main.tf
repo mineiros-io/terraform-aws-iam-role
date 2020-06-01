@@ -13,7 +13,7 @@ variable "region" {
 }
 
 # ------------------------------------------------------------------------------
-# Example Usage: Create an Full S3 Access Instance Profile
+# Example Usage: Create a Full S3 Access Instance Profile
 # ------------------------------------------------------------------------------
 module "instance-profile-s3-full-access" {
   source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"

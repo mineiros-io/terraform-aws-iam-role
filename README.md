@@ -31,7 +31,7 @@ In contrast to the plain `aws_iam_role` resource this module simplifies adding I
   Create an inline IAM policy, Attach custom or AWS managed policies. Create an IAM instance profile.
 
 ## Getting Started
-Basic usage to grant an AWS Account with Account ID `123456789012` access to assume a role that grants
+Basic usage for granting an AWS Account with Account ID `123456789012` access to assume a role that grants
 full access to AWS Simple Storage Service (S3)
 
 ```hcl

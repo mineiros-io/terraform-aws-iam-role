@@ -67,7 +67,7 @@ commands will detect it and remind you to do so if necessary.
 
 ### Planning the example
 Run `terraform plan` to preview the creation of the resources.
-Attention: We are not creating a plan output file here; feel free to do so ;)
+Attention: We are not creating a plan output file in this case. In a production environment, it would be recommended to create a plan file first that can be applied in an isolated apply run.
 
 ```hcl
 Refreshing Terraform state in-memory prior to plan...
