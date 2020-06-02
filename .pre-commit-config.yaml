@@ -9,3 +9,4 @@ repos:
       - id: gofmt
       - id: goimports
       - id: golint
+      - id: markdown-link-check
