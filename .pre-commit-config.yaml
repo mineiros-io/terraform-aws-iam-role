@@ -9,4 +9,5 @@ repos:
       - id: gofmt
       - id: goimports
       - id: golint
+      - id: phony-targets
       - id: markdown-link-check
