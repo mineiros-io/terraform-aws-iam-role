@@ -131,7 +131,7 @@ resource "aws_iam_role_policy" "policy" {
 resource "aws_iam_role_policy_attachment" "policy_attachment" {
   count = var.module_enabled ? length(var.policy_arns) : 0
 
-  role       = aws_iam_role.role[0]
+  role       = aws_iam_role.role[0].name
   policy_arn = var.policy_arns[count.index]
 
   depends_on = [var.module_depends_on]
