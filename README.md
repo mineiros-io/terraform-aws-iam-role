@@ -1,4 +1,4 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/master/mineiros-primary-logo.svg" width="400"/>](https://www.mineiros.io/?ref=terraform-aws-iam-role)
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/master/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-aws-iam-role)
 
 [![Build Status](https://mineiros.semaphoreci.com/badges/terraform-aws-iam-role/branches/master.svg?style=shields&key=df11a416-f581-4d35-917a-fa3c2de2048e)](https://mineiros.semaphoreci.com/projects/terraform-aws-iam-role)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-iam-role.svg?label=latest&sort=semver)](https://github.com/mineiros-io/terraform-aws-iam-role/releases)
@@ -8,19 +8,20 @@
 
 # terraform-aws-iam-role
 
-A [Terraform](https://www.terraform.io) 0.12 base module for
-[Amazon Web Services (AWS)](https://aws.amazon.com/).
+A [Terraform](https://www.terraform.io) 0.12 module for creating and managing
+[IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
+on [Amazon Web Services (AWS)](https://aws.amazon.com/).
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
 - [Module Argument Reference](#module-argument-reference)
-- [Module Configuration](#module-configuration)
+  - [Module Configuration](#module-configuration)
   - [Top-level Arguments](#top-level-arguments)
-  - [Main Resource Configuration](#main-resource-configuration)
-  - [Extended Resource configuration](#extended-resource-configuration)
-    - [Custom & Managed Policies](#custom--managed-policies)
-    - [Inline Policiy](#inline-policiy)
-    - [Instance Profile](#instance-profile)
+    - [Main Resource Configuration](#main-resource-configuration)
+    - [Extended Resource configuration](#extended-resource-configuration)
+      - [Custom & Managed Policies](#custom--managed-policies)
+      - [Inline Policiy](#inline-policiy)
+      - [Instance Profile](#instance-profile)
 - [Module Attributes Reference](#module-attributes-reference)
 - [External Documentation](#external-documentation)
 - [Module Versioning](#module-versioning)
@@ -43,13 +44,21 @@ In contrast to the plain `aws_iam_role` resource this module simplifies adding I
 
 ## Getting Started
 
-Basic usage:
+Basic usage for granting an AWS Account with Account ID `123456789012` access to assume a role that grants
+full access to AWS Simple Storage Service (S3)
 
 ```hcl
 module "role-s3-full-access" {
   source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
 
-  name = "s3-full-access"
+  name = "S3FullAccess"
+
+  assume_role_principals = [
+    {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::123456789012:root"]
+    }
+  ]
 
   policy_statements = [
     {
@@ -71,145 +80,168 @@ and
 [examples/](https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/examples)
 for details and use-cases.
 
-## Module Configuration
+### Module Configuration
 
-- **`module_enabled`**: _(Optional `bool`)_
+- **`module_enabled`**: *(Optional `bool`)*
+
   Specifies whether resources in the module will be created.
   Default is `true`.
 
-- **`module_depends_on`**: _(Optional `list(any)`)_
-  A list of dependencies. Any object can be assigned to this list to define a hidden
-  external dependency.
+- **`module_depends_on`**: *(Optional `list(any)`)*
+
+  A list of dependencies.
+  Any object can be assigned to this list to define a hidden external dependency.
 
 ### Top-level Arguments
 
-### Main Resource Configuration
+#### Main Resource Configuration
 
-- **`name`**: _(Optional `string`, Forces new resource)_
+- **`name`**: *(Optional `string`, Forces new resource)*
+
   The name of the role. If omitted, Terraform will assign a random, unique name.
 
-- **`name_prefix`**: _(Optional `string`, Forces new resource)_
+- **`name_prefix`**: *(Optional `string`, Forces new resource)*
+
   Creates a unique name beginning with the specified prefix. Conflicts with name.
 
 - **`assume_role_policy`**: **(Required `string(json)`)**
-  A JSON String representing the policy that grants an entity permission to assume the role.
-  (only required if `assume_role_principals` is not set)\*\*
 
-```hcl
-assume_role_policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "sts:AssumeRole",
-        "Principal": {
-          "Service": "ec2.amazonaws.com"
-        },
-        "Effect": "Allow",
-        "Sid": ""
-      }
-    ]
-  }
-EOF
-```
+  A JSON String representing the policy that grants an entity permission to assume the role.
+  *(only required if `assume_role_principals` is not set)*
+
+  ```hcl
+  assume_role_policy = <<EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Effect": "Allow",
+          "Sid": ""
+        }
+      ]
+    }
+  EOF
+  ```
 
 - **`assume_role_principals`**: **(Required `set(principal)`**
+
   A Set of objects representing Principals in an IAM policy document.
-  (only required if `assume_role_policy` is not set)\*\*
+  *(only required if `assume_role_policy` is not set)*
 
-```hcl
-assume_role_principals = [
-  { type        = "Service"
-    identifiers = [ "ec2.amazonaws.com" ]
-  }
-]
-```
+  ```hcl
+  assume_role_principals = [
+    { type        = "Service"
+      identifiers = [ "ec2.amazonaws.com" ]
+    }
+  ]
+  ```
 
-- **`assume_role_conditions`**: _(Optional `set(condition)`)_
-  (only evaluated when `assume_role_principals` is used)
+- **`assume_role_conditions`**: *(Optional `set(condition)`)*
+
   A Set of objects representing Conditions in an IAM policy document.
+  *(only evaluated when `assume_role_principals` is used)*
 
-```hcl
-assume_role_conditions = [
-  { test     = "Bool"
-    variable = "aws:MultiFactorAuthPresent"
-    values   = [ "true" ]
-  }
-]
-```
+  ```hcl
+  assume_role_conditions = [
+    { test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = [ "true" ]
+    }
+  ]
+  ```
 
-- **`force_detach_policies`**: _(Optional `bool`)_
+- **`force_detach_policies`**: *(Optional `bool`)*
+
   Specifies to force detaching any policies the role has before destroying it. Defaults to false.
 
-- **`path`**: _(Optional `string`)_
+- **`path`**: *(Optional `string`)*
+
   The path to the role. See IAM Identifiers for more information.
 
-- **`description`**: _(Optional `string`)_
+- **`description`**: *(Optional `string`)*
+
   The description of the role.
 
-- **`max_session_duration`**: _(Optional `number`)_
-  The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 - hours.
+- **`max_session_duration`**: *(Optional `number`)*
 
-- **`permissions_boundary`**: _(Optional `string(arn)`)_
+  The maximum session duration (in seconds) that you want to set for the specified role.
+  If you do not specify a value for this setting, the default maximum of one hour is applied.
+  This setting can have a value from 1 hour to 12 - hours.
+
+- **`permissions_boundary`**: *(Optional `string(arn)`)*
+
   The ARN of the policy that is used to set the permissions boundary for the role.
 
-- **`tags`**: _(Optional `map(string)`)_
+- **`tags`**: *(Optional `map(string)`)*
+
   Key-value map of tags for the IAM role.
 
-### Extended Resource configuration
+#### Extended Resource configuration
 
-#### Custom & Managed Policies
+##### Custom & Managed Policies
 
-- **`policy_arns`**: _(Optional `list(string)`)_
-  List of IAM custom or managed policies ARNs to attach to the User.
+- **`policy_arns`**: *(Optional `list(string)`)*
 
-#### Inline Policiy
+  List of IAM custom or managed policies ARNs to attach to the role.
 
-- **`policy_name`**: _(Optional `string`)_
+##### Inline Policiy
+
+- **`policy_name`**: *(Optional `string`)*
+
   The name of the role policy. If omitted, Terraform will assign a random, unique name.
 
-- **`policy_name_prefix`**: _(Optional `string`)_
+- **`policy_name_prefix`**: *(Optional `string`)*
+
   Creates a unique name beginning with the specified prefix. Conflicts with name.
 
-- **`policy_statements`**: _(Optional `list(statement)`)_
-  List of IAM policy statements to attach to the User as an inline policy.
+- **`policy_statements`**: *(Optional `list(statement)`)*
 
-```hcl
-policy_statements = [
-  {
-    sid = "FullS3Access"
+  List of IAM policy statements to attach to the role as an inline policy.
 
-    effect = "Allow"
+  ```hcl
+  policy_statements = [
+    {
+      sid = "FullS3Access"
 
-    actions     = [ "s3:*" ]
-    not_actions = []
+      effect = "Allow"
 
-    resources     = [ "*" ]
-    not_resources = []
+      actions     = [ "s3:*" ]
+      not_actions = []
 
-    conditions = [
-      { test     = "Bool"
-        variable = "aws:MultiFactorAuthPresent"
-        values   = [ "true" ]
-      }
-    ]
-  }
-]
-```
+      resources     = [ "*" ]
+      not_resources = []
 
-#### Instance Profile
+      conditions = [
+        { test     = "Bool"
+          variable = "aws:MultiFactorAuthPresent"
+          values   = [ "true" ]
+        }
+      ]
+    }
+  ]
+  ```
 
-- **`create_instance_profile`**: _(Optional `bool`)_
+##### Instance Profile
+
+- **`create_instance_profile`**: *(Optional `bool`)*
+
   Whether to create an instance profile.
   Default is `true` if `name` or `name_prefix` are set else `false`.
 
-- **`instance_profile_name`**: _(Optional `string`, Forces new resource)_
+- **`instance_profile_name`**: *(Optional `string`, Forces new resource)*
+
   The profile's name. If omitted, Terraform will assign a random, unique name.
 
-- **`instance_profile_name_prefix`**: _(Optional `string`, Forces new resource)_
+- **`instance_profile_name_prefix`**: *(Optional `string`, Forces new resource)*
+
   Creates a unique name beginning with the specified prefix. Conflicts with name.
 
-- **`instance_profile_path`**: _(Optional `string`)_
+- **`instance_profile_path`**: *(Optional `string`)*
+
   Path in which to create the profile. Default is `/`.
 
 ## Module Attributes Reference
@@ -224,10 +256,9 @@ The following attributes are exported by the module:
 ## External Documentation
 
 - AWS Documentation IAM:
-
-  - Roles: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
-  - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
-  - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
+  - Roles: [https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
+  - Policies: [https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html)
+  - Instance Profile: [https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html)
 
 - Terraform AWS Provider Documentation:
   - https://www.terraform.io/docs/providers/aws/r/iam_role.html
@@ -242,8 +273,8 @@ This Module follows the principles of [Semantic Versioning (SemVer)](https://sem
 Using the given version number of `MAJOR.MINOR.PATCH`, we apply the following constructs:
 
 1. Use the `MAJOR` version for incompatible changes.
-2. Use the `MINOR` version when adding functionality in a backwards compatible manner.
-3. Use the `PATCH` version when introducing backwards compatible bug fixes.
+1. Use the `MINOR` version when adding functionality in a backwards compatible manner.
+1. Use the `PATCH` version when introducing backwards compatible bug fixes.
 
 ### Backwards compatibility in `0.0.z` and `0.y.z` version
 
@@ -254,15 +285,14 @@ Using the given version number of `MAJOR.MINOR.PATCH`, we apply the following co
 
 ## About Mineiros
 
-Mineiros is a [DevOps as a Service](https://mineiros.io/?ref=terraform-aws-iam-role) company based in Berlin, Germany.
-We offer commercial support for all of our projects and encourage you to reach out if you have any questions or need
-help. Feel free to send us an email at [hello@mineiros.io](mailto:hello@mineiros.io).
+Mineiros is a [DevOps as a Service](https://mineiros.io/?ref=terraform-aws-iam-role) company based in Berlin,
+Germany. We offer commercial support for all of our projects and encourage you to reach out if you have any questions or
+need help. Feel free to send us an email at [hello@mineiros.io](mailto:hello@mineiros.io).
 
 We can also help you with:
 
-- Terraform Modules for all types of infrastructure such as VPC's, Docker clusters,
-  databases, logging and monitoring, CI, etc.
-- Consulting & Training on AWS, Terraform and DevOps.
+- Terraform modules for all types of infrastructure such as VPCs, Docker clusters, databases, logging and monitoring, CI, etc.
+- Consulting & training on AWS, Terraform and DevOps
 
 ## Reporting Issues
 
@@ -272,13 +302,13 @@ to track community reported issues and missing features.
 ## Contributing
 
 Contributions are always encouraged and welcome! For the process of accepting changes, we use
-[Pull Requests](https://github.com/mineiros-io/terraform-aws-iam-role/pulls). If you’d like more information, please
+[Pull Requests](https://github.com/mineiros-io/terraform-aws-iam-role/pulls). If you'd like more information, please
 see our [Contribution Guidelines](https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/CONTRIBUTING.md).
 
 ## Makefile Targets
 
 This repository comes with a handy
-[Makefile](https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/Makefile).  
+[Makefile](https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/Makefile).
 Run `make help` to see details on each available target.
 
 ## License
