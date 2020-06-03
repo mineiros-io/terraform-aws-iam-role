@@ -1,4 +1,4 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/master/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-aws-iam-role)
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/master/mineiros-primary-logo.svg" width="400"/>](https://www.mineiros.io/?ref=terraform-aws-iam-role)
 
 [![Build Status](https://mineiros.semaphoreci.com/badges/terraform-aws-iam-role/branches/master.svg?style=shields&key=df11a416-f581-4d35-917a-fa3c2de2048e)](https://mineiros.semaphoreci.com/projects/terraform-aws-iam-role)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-iam-role.svg?label=latest&sort=semver)](https://github.com/mineiros-io/terraform-aws-iam-role/releases)
@@ -32,6 +32,7 @@ A [Terraform](https://www.terraform.io) 0.12 base module for
 - [License](#license)
 
 ## Module Features
+
 In contrast to the plain `aws_iam_role` resource this module simplifies adding IAM Policies to the role.
 
 - **Standard Module Features**:
@@ -72,27 +73,27 @@ for details and use-cases.
 
 ## Module Configuration
 
-- **`module_enabled`**: *(Optional `bool`)*
-Specifies whether resources in the module will be created.
-Default is `true`.
+- **`module_enabled`**: _(Optional `bool`)_
+  Specifies whether resources in the module will be created.
+  Default is `true`.
 
-- **`module_depends_on`**: *(Optional `list(any)`)*
-A list of dependencies. Any object can be assigned to this list to define a hidden
-external dependency.
+- **`module_depends_on`**: _(Optional `list(any)`)_
+  A list of dependencies. Any object can be assigned to this list to define a hidden
+  external dependency.
 
 ### Top-level Arguments
 
 ### Main Resource Configuration
 
-- **`name`**: *(Optional `string`, Forces new resource)*
-The name of the role. If omitted, Terraform will assign a random, unique name.
+- **`name`**: _(Optional `string`, Forces new resource)_
+  The name of the role. If omitted, Terraform will assign a random, unique name.
 
-- **`name_prefix`**: *(Optional `string`, Forces new resource)*
-Creates a unique name beginning with the specified prefix. Conflicts with name.
+- **`name_prefix`**: _(Optional `string`, Forces new resource)_
+  Creates a unique name beginning with the specified prefix. Conflicts with name.
 
 - **`assume_role_policy`**: **(Required `string(json)`)**
-A JSON String representing the policy that grants an entity permission to assume the role.
-(only required if `assume_role_principals` is not set)**
+  A JSON String representing the policy that grants an entity permission to assume the role.
+  (only required if `assume_role_principals` is not set)\*\*
 
 ```hcl
 assume_role_policy = <<EOF
@@ -113,8 +114,8 @@ EOF
 ```
 
 - **`assume_role_principals`**: **(Required `set(principal)`**
-A Set of objects representing Principals in an IAM policy document.
-(only required if `assume_role_policy` is not set)**
+  A Set of objects representing Principals in an IAM policy document.
+  (only required if `assume_role_policy` is not set)\*\*
 
 ```hcl
 assume_role_principals = [
@@ -124,9 +125,9 @@ assume_role_principals = [
 ]
 ```
 
-- **`assume_role_conditions`**: *(Optional `set(condition)`)*
-(only evaluated when `assume_role_principals` is used)
-A Set of objects representing Conditions in an IAM policy document.
+- **`assume_role_conditions`**: _(Optional `set(condition)`)_
+  (only evaluated when `assume_role_principals` is used)
+  A Set of objects representing Conditions in an IAM policy document.
 
 ```hcl
 assume_role_conditions = [
@@ -137,41 +138,41 @@ assume_role_conditions = [
 ]
 ```
 
-- **`force_detach_policies`**: *(Optional `bool`)*
-Specifies to force detaching any policies the role has before destroying it. Defaults to false.
+- **`force_detach_policies`**: _(Optional `bool`)_
+  Specifies to force detaching any policies the role has before destroying it. Defaults to false.
 
-- **`path`**: *(Optional `string`)*
-The path to the role. See IAM Identifiers for more information.
+- **`path`**: _(Optional `string`)_
+  The path to the role. See IAM Identifiers for more information.
 
-- **`description`**: *(Optional `string`)*
-The description of the role.
+- **`description`**: _(Optional `string`)_
+  The description of the role.
 
-- **`max_session_duration`**: *(Optional `number`)*
-The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 - hours.
+- **`max_session_duration`**: _(Optional `number`)_
+  The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 - hours.
 
-- **`permissions_boundary`**: *(Optional `string(arn)`)*
-The ARN of the policy that is used to set the permissions boundary for the role.
+- **`permissions_boundary`**: _(Optional `string(arn)`)_
+  The ARN of the policy that is used to set the permissions boundary for the role.
 
-- **`tags`**: *(Optional `map(string)`)*
-Key-value map of tags for the IAM role.
+- **`tags`**: _(Optional `map(string)`)_
+  Key-value map of tags for the IAM role.
 
 ### Extended Resource configuration
 
 #### Custom & Managed Policies
 
-- **`policy_arns`**: *(Optional `list(string)`)*
-List of IAM custom or managed policies ARNs to attach to the User.
+- **`policy_arns`**: _(Optional `list(string)`)_
+  List of IAM custom or managed policies ARNs to attach to the User.
 
 #### Inline Policiy
 
-- **`policy_name`**: *(Optional `string`)*
-The name of the role policy. If omitted, Terraform will assign a random, unique name.
+- **`policy_name`**: _(Optional `string`)_
+  The name of the role policy. If omitted, Terraform will assign a random, unique name.
 
-- **`policy_name_prefix`**: *(Optional `string`)*
-Creates a unique name beginning with the specified prefix. Conflicts with name.
+- **`policy_name_prefix`**: _(Optional `string`)_
+  Creates a unique name beginning with the specified prefix. Conflicts with name.
 
-- **`policy_statements`**: *(Optional `list(statement)`)*
-List of IAM policy statements to attach to the User as an inline policy.
+- **`policy_statements`**: _(Optional `list(statement)`)_
+  List of IAM policy statements to attach to the User as an inline policy.
 
 ```hcl
 policy_statements = [
@@ -198,18 +199,18 @@ policy_statements = [
 
 #### Instance Profile
 
-- **`create_instance_profile`**: *(Optional `bool`)*
-Whether to create an instance profile.
-Default is `true` if `name` or `name_prefix` are set else `false`.
+- **`create_instance_profile`**: _(Optional `bool`)_
+  Whether to create an instance profile.
+  Default is `true` if `name` or `name_prefix` are set else `false`.
 
-- **`instance_profile_name`**: *(Optional `string`, Forces new resource)*
-The profile's name. If omitted, Terraform will assign a random, unique name.
+- **`instance_profile_name`**: _(Optional `string`, Forces new resource)_
+  The profile's name. If omitted, Terraform will assign a random, unique name.
 
-- **`instance_profile_name_prefix`**: *(Optional `string`, Forces new resource)*
-Creates a unique name beginning with the specified prefix. Conflicts with name.
+- **`instance_profile_name_prefix`**: _(Optional `string`, Forces new resource)_
+  Creates a unique name beginning with the specified prefix. Conflicts with name.
 
-- **`instance_profile_path`**: *(Optional `string`)*
-Path in which to create the profile. Default is `/`.
+- **`instance_profile_path`**: _(Optional `string`)_
+  Path in which to create the profile. Default is `/`.
 
 ## Module Attributes Reference
 
@@ -223,6 +224,7 @@ The following attributes are exported by the module:
 ## External Documentation
 
 - AWS Documentation IAM:
+
   - Roles: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
   - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
   - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
@@ -239,16 +241,16 @@ This Module follows the principles of [Semantic Versioning (SemVer)](https://sem
 
 Using the given version number of `MAJOR.MINOR.PATCH`, we apply the following constructs:
 
-1) Use the `MAJOR` version for incompatible changes.
-2) Use the `MINOR` version when adding functionality in a backwards compatible manner.
-3) Use the `PATCH` version when introducing backwards compatible bug fixes.
+1. Use the `MAJOR` version for incompatible changes.
+2. Use the `MINOR` version when adding functionality in a backwards compatible manner.
+3. Use the `PATCH` version when introducing backwards compatible bug fixes.
 
 ### Backwards compatibility in `0.0.z` and `0.y.z` version
 
 - In the context of initial development, backwards compatibility in versions `0.0.z` is **not guaranteed** when `z` is
   increased. (Initial development)
 - In the context of pre-release, backwards compatibility in versions `0.y.z` is **not guaranteed** when `y` is
-increased. (Pre-release)
+  increased. (Pre-release)
 
 ## About Mineiros
 
@@ -259,7 +261,7 @@ help. Feel free to send us an email at [hello@mineiros.io](mailto:hello@mineiros
 We can also help you with:
 
 - Terraform Modules for all types of infrastructure such as VPC's, Docker clusters,
-databases, logging and monitoring, CI, etc.
+  databases, logging and monitoring, CI, etc.
 - Consulting & Training on AWS, Terraform and DevOps.
 
 ## Reporting Issues
