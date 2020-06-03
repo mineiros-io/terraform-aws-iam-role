@@ -31,13 +31,21 @@ In contrast to the plain `aws_iam_role` resource this module simplifies adding I
   Create an inline IAM policy, Attach custom or AWS managed policies. Create an IAM instance profile.
 
 ## Getting Started
-Basic usage:
+Basic usage for granting an AWS Account with Account ID `123456789012` access to assume a role that grants
+full access to AWS Simple Storage Service (S3)
 
 ```hcl
 module "role-s3-full-access" {
   source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
 
-  name = "s3-full-access"
+  name = "S3FullAccess"
+
+  assume_role_principals = [
+    {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::123456789012:root"]
+    }
+  ]
 
   policy_statements = [
     {
@@ -60,135 +68,158 @@ for details and use-cases.
 
 #### Module Configuration
 - **`module_enabled`**: *(Optional `bool`)*
-Specifies whether resources in the module will be created.
-Default is `true`.
+
+  Specifies whether resources in the module will be created.
+  Default is `true`.
 
 - **`module_depends_on`**: *(Optional `list(any)`)*
-A list of dependencies. Any object can be assigned to this list to define a hidden
-external dependency.
+
+  A list of dependencies.
+  Any object can be assigned to this list to define a hidden external dependency.
 
 #### Top-level Arguments
 
 ##### Main Resource Configuration
 - **`name`**: *(Optional `string`, Forces new resource)*
-The name of the role. If omitted, Terraform will assign a random, unique name.
+
+  The name of the role. If omitted, Terraform will assign a random, unique name.
 
 - **`name_prefix`**: *(Optional `string`, Forces new resource)*
-Creates a unique name beginning with the specified prefix. Conflicts with name.
+
+  Creates a unique name beginning with the specified prefix. Conflicts with name.
 
 - **`assume_role_policy`**: **(Required `string(json)`)**
-A JSON String representing the policy that grants an entity permission to assume the role.
-(only required if `assume_role_principals` is not set)**
-```hcl
-assume_role_policy = <<EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "sts:AssumeRole",
-        "Principal": {
-          "Service": "ec2.amazonaws.com"
-        },
-        "Effect": "Allow",
-        "Sid": ""
-      }
-    ]
-  }
-EOF
-```
+
+  A JSON String representing the policy that grants an entity permission to assume the role.
+  *(only required if `assume_role_principals` is not set)*
+  ```hcl
+  assume_role_policy = <<EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Effect": "Allow",
+          "Sid": ""
+        }
+      ]
+    }
+  EOF
+  ```
 
 - **`assume_role_principals`**: **(Required `set(principal)`**
-A Set of objects representing Principals in an IAM policy document.
-(only required if `assume_role_policy` is not set)**
-```hcl
-assume_role_principals = [
-  { type        = "Service"
-    identifiers = [ "ec2.amazonaws.com" ]
-  }
-]
-```
+
+  A Set of objects representing Principals in an IAM policy document.
+  *(only required if `assume_role_policy` is not set)*
+  ```hcl
+  assume_role_principals = [
+    { type        = "Service"
+      identifiers = [ "ec2.amazonaws.com" ]
+    }
+  ]
+  ```
 
 - **`assume_role_conditions`**: *(Optional `set(condition)`)*
-(only evaluated when `assume_role_principals` is used)
-A Set of objects representing Conditions in an IAM policy document.
-```hcl
-assume_role_conditions = [
-  { test     = "Bool"
-    variable = "aws:MultiFactorAuthPresent"
-    values   = [ "true" ]
-  }
-]
-```
+
+  A Set of objects representing Conditions in an IAM policy document.
+  *(only evaluated when `assume_role_principals` is used)*
+  ```hcl
+  assume_role_conditions = [
+    { test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = [ "true" ]
+    }
+  ]
+  ```
 
 - **`force_detach_policies`**: *(Optional `bool`)*
-Specifies to force detaching any policies the role has before destroying it. Defaults to false.
+
+  Specifies to force detaching any policies the role has before destroying it. Defaults to false.
 
 - **`path`**: *(Optional `string`)*
-The path to the role. See IAM Identifiers for more information.
+
+  The path to the role. See IAM Identifiers for more information.
 
 - **`description`**: *(Optional `string`)*
-The description of the role.
+
+  The description of the role.
 
 - **`max_session_duration`**: *(Optional `number`)*
-The maximum session duration (in seconds) that you want to set for the specified role. If you do not specify a value for this setting, the default maximum of one hour is applied. This setting can have a value from 1 hour to 12 - hours.
+
+  The maximum session duration (in seconds) that you want to set for the specified role.
+  If you do not specify a value for this setting, the default maximum of one hour is applied.
+  This setting can have a value from 1 hour to 12 - hours.
 
 - **`permissions_boundary`**: *(Optional `string(arn)`)*
-The ARN of the policy that is used to set the permissions boundary for the role.
+
+  The ARN of the policy that is used to set the permissions boundary for the role.
 
 - **`tags`**: *(Optional `map(string)`)*
-Key-value map of tags for the IAM role.
+
+  Key-value map of tags for the IAM role.
 
 ##### Extended Resource configuration
 
 ###### Custom & Managed Policies
 - **`policy_arns`**: *(Optional `list(string)`)*
-List of IAM custom or managed policies ARNs to attach to the User.
+
+  List of IAM custom or managed policies ARNs to attach to the role.
 
 ###### Inline Policiy
 - **`policy_name`**: *(Optional `string`)*
-The name of the role policy. If omitted, Terraform will assign a random, unique name.
+
+  The name of the role policy. If omitted, Terraform will assign a random, unique name.
 
 - **`policy_name_prefix`**: *(Optional `string`)*
-Creates a unique name beginning with the specified prefix. Conflicts with name.
+
+  Creates a unique name beginning with the specified prefix. Conflicts with name.
 
 - **`policy_statements`**: *(Optional `list(statement)`)*
-List of IAM policy statements to attach to the User as an inline policy.
-```hcl
-policy_statements = [
-  {
-    sid = "FullS3Access"
 
-    effect = "Allow"
+  List of IAM policy statements to attach to the role as an inline policy.
+  ```hcl
+  policy_statements = [
+    {
+      sid = "FullS3Access"
 
-    actions     = [ "s3:*" ]
-    not_actions = []
+      effect = "Allow"
 
-    resources     = [ "*" ]
-    not_resources = []
+      actions     = [ "s3:*" ]
+      not_actions = []
 
-    conditions = [
-      { test     = "Bool"
-        variable = "aws:MultiFactorAuthPresent"
-        values   = [ "true" ]
-      }
-    ]
-  }
-]
-```
+      resources     = [ "*" ]
+      not_resources = []
+
+      conditions = [
+        { test     = "Bool"
+          variable = "aws:MultiFactorAuthPresent"
+          values   = [ "true" ]
+        }
+      ]
+    }
+  ]
+  ```
 
 ###### Instance Profile
 - **`create_instance_profile`**: *(Optional `bool`)*
-Whether to create an instance profile.
-Default is `true` if `name` or `name_prefix` are set else `false`.
+
+  Whether to create an instance profile.
+  Default is `true` if `name` or `name_prefix` are set else `false`.
 
 - **`instance_profile_name`**: *(Optional `string`, Forces new resource)*
-The profile's name. If omitted, Terraform will assign a random, unique name.
+
+  The profile's name. If omitted, Terraform will assign a random, unique name.
 
 - **`instance_profile_name_prefix`**: *(Optional `string`, Forces new resource)*
-Creates a unique name beginning with the specified prefix. Conflicts with name.
+
+  Creates a unique name beginning with the specified prefix. Conflicts with name.
 
 - **`instance_profile_path`**: *(Optional `string`)*
-Path in which to create the profile. Default is `/`.
+
+  Path in which to create the profile. Default is `/`.
 
 ## Module Attributes Reference
 The following attributes are exported by the module:
@@ -221,7 +252,7 @@ Using the given version number of `MAJOR.MINOR.PATCH`, we apply the following co
 - In the context of initial development, backwards compatibility in versions `0.0.z` is **not guaranteed** when `z` is
   increased. (Initial development)
 - In the context of pre-release, backwards compatibility in versions `0.y.z` is **not guaranteed** when `y` is
-increased. (Pre-release)
+  increased. (Pre-release)
 
 ## About Mineiros
 Mineiros is a [DevOps as a Service](https://mineiros.io/) company based in Berlin, Germany. We offer commercial support
@@ -230,7 +261,7 @@ Feel free to send us an email at [hello@mineiros.io](mailto:hello@mineiros.io).
 
 We can also help you with:
 - Terraform Modules for all types of infrastructure such as VPC's, Docker clusters,
-databases, logging and monitoring, CI, etc.
+  databases, logging and monitoring, CI, etc.
 - Consulting & Training on AWS, Terraform and DevOps.
 
 ## Reporting Issues
