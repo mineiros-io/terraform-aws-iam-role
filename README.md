@@ -256,9 +256,9 @@ The following attributes are exported by the module:
 ## External Documentation
 
 - AWS Documentation IAM:
-  - Roles: [https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
-  - Policies: [https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html)
-  - Instance Profile: [https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html)
+  - Roles: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
+  - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
+  - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
 
 - Terraform AWS Provider Documentation:
   - https://www.terraform.io/docs/providers/aws/r/iam_role.html
