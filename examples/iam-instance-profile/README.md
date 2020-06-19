@@ -198,7 +198,6 @@ previously created resources again.
 [releases-github]: https://github.com/mineiros-io/terraform-aws-iam-role/releases
 [main.tf]: https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/examples/iam-instance-profile/main.tf
 [example/]: https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/examples/example
-
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
