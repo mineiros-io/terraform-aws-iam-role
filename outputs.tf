@@ -5,6 +5,7 @@
 # ------------------------------------------------------------------------------
 # OUTPUT ALL RESOURCES AS FULL OBJECTS
 # ------------------------------------------------------------------------------
+
 output "role" {
   description = "The aws_iam_role object."
   value       = try(aws_iam_role.role[0], null)
@@ -32,6 +33,7 @@ output "instance_profile" {
 # ------------------------------------------------------------------------------
 # OUTPUT MODULE CONFIGURATION
 # ------------------------------------------------------------------------------
+
 output "module_enabled" {
   description = "Whether the module is enabled"
   value       = var.module_enabled
