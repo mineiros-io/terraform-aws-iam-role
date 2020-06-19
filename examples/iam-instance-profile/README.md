@@ -188,10 +188,6 @@ previously created resources again.
   - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
 
 <!-- References -->
-<!-- markdown-link-check-disable -->
-[example/]: https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/examples/example
-<!-- markdown-link-check-enable -->
-
 [homepage]: https://mineiros.io/?ref=terraform-aws-iam-role
 
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
@@ -199,10 +195,10 @@ previously created resources again.
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-iam-role.svg?label=latest&sort=semver
 
-<!-- markdown-link-check-disable -->
 [releases-github]: https://github.com/mineiros-io/terraform-aws-iam-role/releases
 [main.tf]: https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/examples/iam-instance-profile/main.tf
-<!-- markdown-link-check-enable -->
+[example/]: https://github.com/mineiros-io/terraform-aws-iam-role/blob/master/examples/example
+
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
