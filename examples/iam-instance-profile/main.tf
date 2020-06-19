@@ -1,6 +1,13 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# CREATE AN IAM INSTANCE PROFILE
+# This example shows how to create an IAM Instance Profile that grants full
+# access to S3.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 # ------------------------------------------------------------------------------
 # Provider Setup
 # ------------------------------------------------------------------------------
+
 provider "aws" {
   version = "~> 2.0"
   region  = var.region
@@ -15,6 +22,7 @@ variable "region" {
 # ------------------------------------------------------------------------------
 # Example Usage: Create a Full S3 Access Instance Profile
 # ------------------------------------------------------------------------------
+
 module "instance-profile-s3-full-access" {
   source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
 
