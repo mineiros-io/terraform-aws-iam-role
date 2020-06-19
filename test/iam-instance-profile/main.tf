@@ -1,20 +1,22 @@
 # ------------------------------------------------------------------------------
 # Provider Setup
 # ------------------------------------------------------------------------------
+
 provider "aws" {
   version = "~> 2.0"
-  region  = var.region
+  region  = var.aws_region
 }
 
-variable "region" {
+variable "aws_region" {
   type        = string
-  description = "The AWS region to run in. Default is 'eu-west-1'"
-  default     = "eu-west-1"
+  description = "The AWS region to run in. Default is 'us-east-1'"
+  default     = "us-east-1"
 }
 
 # ------------------------------------------------------------------------------
 # Example Usage: Create a Full S3 Access Instance Profile
 # ------------------------------------------------------------------------------
+
 module "instance-profile-s3-full-access" {
   source = "../.."
 
