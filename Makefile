@@ -46,24 +46,32 @@ DOCKER_RUN_CMD  = docker run ${DOCKER_FLAGS} ${BUILD_TOOLS_DOCKER_IMAGE}
 .PHONY: default
 default: help
 
-## Run pre-commit hooks in build-tools docker container.
+# not exported in make help on purpose, as this is a one-time shot to make life easier
+.PHONY: template/adjust
+template/adjust:
+	@find . -path "*/.git" -prune -o -type f -exec sed -i -e "s,terraform-aws-iam-role,$${PWD##*/},g" {} \;
+
+## Run pre-commit hooks inside a build-tools docker container.
 .PHONY: test/pre-commit
 test/pre-commit: DOCKER_FLAGS += ${DOCKER_SSH_FLAGS}
 test/pre-commit:
 	$(call docker-run,pre-commit run -a)
 
-## Run go tests hooks in build-tools docker container.
+## Run all Go tests inside a build-tools docker container. This is complementary to running 'go test ./test/...'.
 .PHONY: test/unit-tests
 test/unit-tests: DOCKER_FLAGS += ${DOCKER_SSH_FLAGS}
 test/unit-tests: DOCKER_FLAGS += ${DOCKER_AWS_FLAGS}
 test/unit-tests:
-	@echo "${GREEN}Start Running Go Tests in Docker Container.${RESET}"
+	@echo "${YELLOW}[TEST] ${GREEN}Start Running Go Tests in Docker Container.${RESET}"
 	$(call go-test,./test/...)
 
 ## Clean up cache and temporary files
 .PHONY: clean
 clean:
 	$(call rm-command,.terraform)
+	$(call rm-command,*.tfplan)
+	$(call rm-command,*/*/.terraform)
+	$(call rm-command,*/*/*.tfplan)
 
 ## Display help for all targets
 .PHONY: help
@@ -80,8 +88,6 @@ help:
 
 # define helper functions
 quiet-command = $(if ${V},${1},$(if ${2},@echo ${2} && ${1}, @${1}))
-
 docker-run    = $(call quiet-command,${DOCKER_RUN_CMD} ${1} | cat,"${YELLOW}[DOCKER RUN] ${GREEN}${1}${RESET}")
-go-test       = $(call quiet-command,${DOCKER_RUN_CMD} go test -v -timeout 45m -parallel 128 ${1} | cat,"${YELLOW}[TEST] ${GREEN}${1}${RESET}")
-
+go-test       = $(call quiet-command,${DOCKER_RUN_CMD} go test -v -count 1 -timeout 45m -parallel 128 ${1} | cat,"${YELLOW}[TEST] ${GREEN}${1}${RESET}")
 rm-command    = $(call quiet-command,rm -rf ${1},"${YELLOW}[CLEAN] ${GREEN}${1}${RESET}")
