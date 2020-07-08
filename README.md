@@ -49,7 +49,8 @@ full access to AWS Simple Storage Service (S3)
 
 ```hcl
 module "role-s3-full-access" {
-  source = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1"
+  source  = "mineiros-io/iam-role/aws"
+  version = "~> 0.1.0"
 
   name = "S3FullAccess"
 
