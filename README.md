@@ -95,11 +95,16 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`name`**: *(Optional `string`, Forces new resource)*
 
-  The name of the role. If omitted, Terraform will assign a random, unique name.
+  The name of the role.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - **`name_prefix`**: *(Optional `string`, Forces new resource)*
 
-  Creates a unique name beginning with the specified prefix. Conflicts with name.
+  If omitted, Terraform will assign a random, unique name.
+  Invalid characters will be replaced with dashes.
+  Creates a unique name beginning with the specified prefix.
+  Conflicts with name.
 
 - **`assume_role_policy`**: **(Required `string(json)`)**
 
@@ -189,11 +194,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`policy_name`**: *(Optional `string`)*
 
-  The name of the role policy. If omitted, Terraform will assign a random, unique name.
+  The name of the role policy.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - **`policy_name_prefix`**: *(Optional `string`)*
 
-  Creates a unique name beginning with the specified prefix. Conflicts with name.
+  Creates a unique name beginning with the specified prefix.
+  Invalid characters will be replaced with dashes.
+  Conflicts with name.
 
 - **`policy_statements`**: *(Optional `list(statement)`)*
 
@@ -231,11 +240,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`instance_profile_name`**: *(Optional `string`, Forces new resource)*
 
-  The profile's name. If omitted, Terraform will assign a random, unique name.
+  The profile's name.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - **`instance_profile_name_prefix`**: *(Optional `string`, Forces new resource)*
 
-  Creates a unique name beginning with the specified prefix. Conflicts with name.
+  Creates a unique name beginning with the specified prefix.
+  Invalid characters will be replaced with dashes.
+  Conflicts with name.
 
 - **`instance_profile_path`**: *(Optional `string`)*
 

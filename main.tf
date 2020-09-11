@@ -18,11 +18,24 @@
 #   - https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
 # ------------------------------------------------------------------------------
 
+locals {
+  _replace = ["/[^\\w+=,.@-]+/", "-"]
+
+  name        = var.name != null ? replace(var.name, local._replace...) : null
+  name_prefix = var.name_prefix != null ? replace(var.name_prefix, local._replace...) : null
+
+  instance_profile_name        = var.instance_profile_name != null ? replace(var.instance_profile_name, local._replace...) : null
+  instance_profile_name_prefix = var.instance_profile_name_prefix != null ? replace(var.instance_profile_name_prefix, local._replace...) : null
+
+  policy_name        = var.policy_name != null ? replace(var.policy_name, local._replace...) : null
+  policy_name_prefix = var.policy_name_prefix != null ? replace(var.policy_name_prefix, local._replace...) : null
+}
+
 resource "aws_iam_role" "role" {
   count = var.module_enabled ? 1 : 0
 
-  name                  = var.name
-  name_prefix           = var.name_prefix
+  name                  = local.name
+  name_prefix           = local.name_prefix
   assume_role_policy    = local.assume_role_policy
   force_detach_policies = var.force_detach_policies
   path                  = var.path
@@ -118,8 +131,8 @@ data "aws_iam_policy_document" "policy" {
 resource "aws_iam_role_policy" "policy" {
   count = local.policy_enabled ? 1 : 0
 
-  name        = var.policy_name
-  name_prefix = var.policy_name_prefix
+  name        = local.policy_name
+  name_prefix = local.policy_name_prefix
 
   policy = data.aws_iam_policy_document.policy[0].json
   role   = aws_iam_role.role[0].name
@@ -140,8 +153,8 @@ resource "aws_iam_role_policy_attachment" "policy_attachment" {
 resource "aws_iam_instance_profile" "instance_profile" {
   count = var.module_enabled && local.create_instance_profile ? 1 : 0
 
-  name        = var.instance_profile_name
-  name_prefix = var.instance_profile_name_prefix
+  name        = local.instance_profile_name
+  name_prefix = local.instance_profile_name_prefix
   path        = var.instance_profile_path
 
   role = aws_iam_role.role[0].name
