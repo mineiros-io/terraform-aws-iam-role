@@ -20,13 +20,10 @@ variable "aws_region" {
 module "instance-profile-s3-full-access" {
   source = "../.."
 
-  # name of the role
-  name = "S3FullAccess"
+  name = "S3 Full Access"
 
-  # name of the instance profile
-  instance_profile_name = "S3FullAcess"
+  create_instance_profile = true
 
-  # the policy granting access
   policy_statements = [
     {
       sid = "S3FullAccess"

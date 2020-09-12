@@ -21,13 +21,12 @@ This is an extract from the code in
 ```hcl
 module "instance-profile-s3-full-access" {
   source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.2.0"
+  version = "~> 0.3.0"
 
-  # name of the role - if omitted terraform will create one
+  # name of the role, policy and instance_profile
   name = "S3FullAccess"
 
-  # name of the instance profile - if omitted terraform will create one
-  instance_profile_name = "S3FullAcess"
+  create_instance_profile = true
 
   # the policy granting access
   policy_statements = [
@@ -56,7 +55,7 @@ Run `terraform init` to initialize the example. The output should look like:
 
 ```bash
 Initializing modules...
-Downloading git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.0.1 for instance-profile-s3-full-access...
+Downloading git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.3.0 for instance-profile-s3-full-access...
 - instance-profile-s3-full-access in .terraform/modules/instance-profile-s3-full-access
 
 Initializing the backend...
@@ -139,7 +138,7 @@ Terraform will perform the following actions:
   # module.instance-profile-s3-full-access.aws_iam_role_policy.policy[0] will be created
   + resource "aws_iam_role_policy" "policy" {
       + id     = (known after apply)
-      + name   = (known after apply)
+      + name   = "S3FullAcess"
       + policy = jsonencode(
             {
               + Statement = [

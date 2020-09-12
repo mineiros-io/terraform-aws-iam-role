@@ -2,15 +2,18 @@
 
 [![Build Status][badge-build]][build-status]
 [![GitHub tag (latest SemVer)][badge-semver]][releases-github]
-[![license][badge-license]][apache20]
 [![Terraform Version][badge-terraform]][releases-terraform]
+[![AWS Provider Version][badge-tf-aws]][releases-aws-provider]
 [![Join Slack][badge-slack]][slack]
 
 # terraform-aws-iam-role
 
-A [Terraform](https://www.terraform.io) 0.12 module for creating and managing
+A [Terraform](https://www.terraform.io) base module for creating and managing
 [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
 on [Amazon Web Services (AWS)](https://aws.amazon.com/).
+
+***This module supports Terraform v0.13 as well as v0.12.20 and above
+and is compatible with the terraform AWS provider v3 as well as v2.0 and above.***
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
@@ -50,7 +53,7 @@ full access to AWS Simple Storage Service (S3)
 ```hcl
 module "role-s3-full-access" {
   source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.2.0"
+  version = "~> 0.3.0"
 
   name = "S3FullAccess"
 
@@ -95,11 +98,16 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`name`**: *(Optional `string`, Forces new resource)*
 
-  The name of the role. If omitted, Terraform will assign a random, unique name.
+  The name of the role.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - **`name_prefix`**: *(Optional `string`, Forces new resource)*
 
-  Creates a unique name beginning with the specified prefix. Conflicts with name.
+  If omitted, Terraform will assign a random, unique name.
+  Invalid characters will be replaced with dashes.
+  Creates a unique name beginning with the specified prefix.
+  Conflicts with name.
 
 - **`assume_role_policy`**: **(Required `string(json)`)**
 
@@ -189,11 +197,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`policy_name`**: *(Optional `string`)*
 
-  The name of the role policy. If omitted, Terraform will assign a random, unique name.
+  The name of the role policy.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - **`policy_name_prefix`**: *(Optional `string`)*
 
-  Creates a unique name beginning with the specified prefix. Conflicts with name.
+  Creates a unique name beginning with the specified prefix.
+  Invalid characters will be replaced with dashes.
+  Conflicts with name.
 
 - **`policy_statements`**: *(Optional `list(statement)`)*
 
@@ -231,11 +243,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`instance_profile_name`**: *(Optional `string`, Forces new resource)*
 
-  The profile's name. If omitted, Terraform will assign a random, unique name.
+  The profile's name.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - **`instance_profile_name_prefix`**: *(Optional `string`, Forces new resource)*
 
-  Creates a unique name beginning with the specified prefix. Conflicts with name.
+  Creates a unique name beginning with the specified prefix.
+  Invalid characters will be replaced with dashes.
+  Conflicts with name.
 
 - **`instance_profile_path`**: *(Optional `string`)*
 
@@ -305,6 +321,8 @@ Run `make help` to see details on each available target.
 
 ## License
 
+[![license][badge-license]][apache20]
+
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
@@ -318,12 +336,14 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [badge-build]: https://github.com/mineiros-io/terraform-aws-iam-role/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-iam-role.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-terraform]: https://img.shields.io/badge/Terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-tf-aws]: https://img.shields.io/badge/AWS-3%20and%202.0+-F8991D.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
 [build-status]: https://github.com/mineiros-io/terraform-aws-iam-role/actions
 [releases-github]: https://github.com/mineiros-io/terraform-aws-iam-role/releases
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
+[releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
 
