@@ -2,8 +2,8 @@
 
 [![Build Status][badge-build]][build-status]
 [![GitHub tag (latest SemVer)][badge-semver]][releases-github]
-[![license][badge-license]][apache20]
 [![Terraform Version][badge-terraform]][releases-terraform]
+[![AWS Provider Version][badge-tf-aws]][releases-aws-provider]
 [![Join Slack][badge-slack]][slack]
 
 # terraform-aws-iam-role
@@ -321,6 +321,8 @@ Run `make help` to see details on each available target.
 
 ## License
 
+[![license][badge-license]][apache20]
+
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
@@ -334,12 +336,14 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [badge-build]: https://github.com/mineiros-io/terraform-aws-iam-role/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-iam-role.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-terraform]: https://img.shields.io/badge/Terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-tf-aws]: https://img.shields.io/badge/AWS-3%20and%202.0+-F8991D.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
 [build-status]: https://github.com/mineiros-io/terraform-aws-iam-role/actions
 [releases-github]: https://github.com/mineiros-io/terraform-aws-iam-role/releases
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
+[releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
 
