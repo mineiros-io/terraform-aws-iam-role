@@ -8,9 +8,12 @@
 
 # terraform-aws-iam-role
 
-A [Terraform](https://www.terraform.io) 0.12 module for creating and managing
+A [Terraform](https://www.terraform.io) base module for creating and managing
 [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
 on [Amazon Web Services (AWS)](https://aws.amazon.com/).
+
+***This module supports Terraform v0.13 as well as v0.12.20 and above
+and is compatible with the terraform AWS provider v3 as well as v2.0 and above.***
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)

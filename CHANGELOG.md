@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.3.0]
+### Added
+- Add support for terraform 0.13.x
+
 ### Changed
 - Fix invalid characters for names on the fly by replacing them with a single dash.
 - Rename name to `role_name` and `name_prefix` to role_prefix.
