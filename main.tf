@@ -21,21 +21,30 @@
 locals {
   _replace = ["/[^\\w+=,.@-]+/", "-"]
 
-  name        = var.name != null ? replace(var.name, local._replace...) : null
-  name_prefix = var.name_prefix != null ? replace(var.name_prefix, local._replace...) : null
+  r_name        = try(compact([var.role_name, var.name])[0], null)
+  r_name_prefix = try(compact([var.role_name_prefix, var.name_prefix])[0], null)
 
-  instance_profile_name        = var.instance_profile_name != null ? replace(var.instance_profile_name, local._replace...) : null
-  instance_profile_name_prefix = var.instance_profile_name_prefix != null ? replace(var.instance_profile_name_prefix, local._replace...) : null
+  p_name        = try(compact([var.policy_name, var.name])[0], null)
+  p_name_prefix = try(compact([var.policy_name_prefix, var.name_prefix])[0], null)
 
-  policy_name        = var.policy_name != null ? replace(var.policy_name, local._replace...) : null
-  policy_name_prefix = var.policy_name_prefix != null ? replace(var.policy_name_prefix, local._replace...) : null
+  ip_name        = try(compact([var.instance_profile_name, var.name])[0], null)
+  ip_name_prefix = try(compact([var.instance_profile_name_prefix, var.name_prefix])[0], null)
+
+  role_name        = try(replace(local.r_name, local._replace...), null)
+  role_name_prefix = try(replace(local.r_name_prefix, local._replace...), null)
+
+  policy_name        = try(replace(local.p_name, local._replace...), null)
+  policy_name_prefix = try(replace(local.p_name_prefix, local._replace...), null)
+
+  instance_profile_name        = try(replace(local.ip_name, local._replace...), null)
+  instance_profile_name_prefix = try(replace(local.ip_name_prefix, local._replace...), null)
 }
 
 resource "aws_iam_role" "role" {
   count = var.module_enabled ? 1 : 0
 
-  name                  = local.name
-  name_prefix           = local.name_prefix
+  name                  = local.role_name
+  name_prefix           = local.role_name_prefix
   assume_role_policy    = local.assume_role_policy
   force_detach_policies = var.force_detach_policies
   path                  = var.path

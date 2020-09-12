@@ -44,11 +44,23 @@ variable "assume_role_conditions" {
 
 variable "name" {
   type        = string
-  description = "(Optional, Forces new resource) The name of the role. Invalid characters will be replaced with dashes. If omitted, Terraform will assign a random, unique name."
+  description = "(Optional, Forces new resources) Default name for the role_name, the policy_name and the instance_profile_name arguments. Invalid characters will be replaced with dashes. Default is a random, unique name."
   default     = null
 }
 
 variable "name_prefix" {
+  type        = string
+  description = "(Optional, Forces new resources) Default prefix for the role_name_prefix, the policy_name_prefix and the instance_profile_name_prefix arguments. Invalid characters will be replaced with dashes. Conflicts with name."
+  default     = null
+}
+
+variable "role_name" {
+  type        = string
+  description = "(Optional, Forces new resource) The name of the role. Invalid characters will be replaced with dashes. Default is the value of the name argument."
+  default     = null
+}
+
+variable "role_name_prefix" {
   type        = string
   description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Invalid characters will be replaced with dashes. Conflicts with name."
   default     = null
@@ -100,13 +112,13 @@ variable "policy_statements" {
 
 variable "policy_name" {
   type        = string
-  description = "(Optional) The name of the role policy. Invalid characters will be replaced with dashes. If omitted, Terraform will assign a random, unique name."
+  description = "(Optional) The name of the role policy. Invalid characters will be replaced with dashes. Default is the value of the name argument."
   default     = null
 }
 
 variable "policy_name_prefix" {
   type        = string
-  description = "(Optional) Creates a unique name beginning with the specified prefix. Invalid characters will be replaced with dashes. Conflicts with name."
+  description = "(Optional) Creates a unique name beginning with the specified prefix. Invalid characters will be replaced with dashes. Conflicts with policy_name."
   default     = null
 }
 
@@ -128,13 +140,13 @@ variable "create_instance_profile" {
 
 variable "instance_profile_name" {
   type        = string
-  description = "(Optional, Forces new resource) The profile's name. Invalid characters will be replaced with dashes. If omitted, Terraform will assign a random, unique name."
+  description = "(Optional, Forces new resource) The profile's name. Invalid characters will be replaced with dashes. Default is the value of the name argument."
   default     = null
 }
 
 variable "instance_profile_name_prefix" {
   type        = string
-  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Invalid characters will be replaced with dashes. Conflicts with name."
+  description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Invalid characters will be replaced with dashes. Conflicts with instance_profile_name."
   default     = null
 }
 
