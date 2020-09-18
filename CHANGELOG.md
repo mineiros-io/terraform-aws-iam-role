@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.3.1]
+### Added
+- Prepare support for Terraform v0.14.x (needs terraform v0.12.20 or above)
+
 ## [0.3.0]
 ### Added
-- Add support for terraform 0.13.x
+- Add support for Terraform v0.13.x
 
 ### Changed
 - Fix invalid characters for names on the fly by replacing them with a single dash.
@@ -16,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0]
 ### Changed
-- Add support for terraform aws provider 3.x
+- Add support for Terraform AWS Provider v3.x
 - Update test to test against 3.0 aws provider
 
 ## [0.1.0]
@@ -38,9 +44,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support to create an instance profile with attached IAM role
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.2.0...v0.3.0
+[Unreleased]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.0...v0.3.1
 <!-- markdown-link-check-disabled -->
+[0.3.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.0.2...v0.1.0
 [0.0.2]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.0.1...v0.0.2
