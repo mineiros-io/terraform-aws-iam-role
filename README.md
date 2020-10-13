@@ -263,7 +263,7 @@ The following attributes are exported by the module:
 
 - **`role`**: The `aws_iam_role` object.
 - **`policy`**: The `aws_iam_role_policy` object.
-- **`policy_attachment`**: The `aws_iam_role_policy_attachment` object.
+- **`policy_attachments`**: An array of `aws_iam_role_policy_attachment` objects.
 - **`instance_profile`**: The `aws_iam_instance_profile` object.
 
 ## External Documentation
