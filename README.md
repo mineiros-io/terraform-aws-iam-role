@@ -53,7 +53,7 @@ full access to AWS Simple Storage Service (S3)
 ```hcl
 module "role-s3-full-access" {
   source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.3.0"
+  version = "~> 0.4.0"
 
   name = "S3FullAccess"
 
