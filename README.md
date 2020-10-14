@@ -53,7 +53,7 @@ full access to AWS Simple Storage Service (S3)
 ```hcl
 module "role-s3-full-access" {
   source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.3.0"
+  version = "~> 0.4.0"
 
   name = "S3FullAccess"
 
@@ -263,7 +263,7 @@ The following attributes are exported by the module:
 
 - **`role`**: The `aws_iam_role` object.
 - **`policy`**: The `aws_iam_role_policy` object.
-- **`policy_attachment`**: The `aws_iam_role_policy_attachment` object.
+- **`policy_attachments`**: An array of `aws_iam_role_policy_attachment` objects.
 - **`instance_profile`**: The `aws_iam_instance_profile` object.
 
 ## External Documentation
