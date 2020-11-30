@@ -110,6 +110,12 @@ variable "policy_statements" {
   default     = []
 }
 
+variable "create_policy" {
+  type        = bool
+  description = "(Optional) Force creation of inline policy, when policy_statements can not be computed"
+  default     = null
+}
+
 variable "policy_name" {
   type        = string
   description = "(Optional) The name of the role policy. Invalid characters will be replaced with dashes. Default is the value of the name argument."

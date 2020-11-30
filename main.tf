@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 }
 
 locals {
-  policy_enabled = var.module_enabled && length(var.policy_statements) > 0
+  policy_enabled = var.module_enabled && (var.create_policy != null ? var.create_policy : length(var.policy_statements) > 0)
 }
 
 data "aws_iam_policy_document" "policy" {

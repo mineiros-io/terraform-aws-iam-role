@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1]
+### Added
+- feat: Add create_policy argument to force creating inline policy
+
 ## [0.4.0]
 ### Changes
 - BREAKING CHANGE: Rename output `policy_attachment` to `policy_attachments` and export all policy attachments.
@@ -48,9 +52,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support to create an instance profile with attached IAM role
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.0...HEAD
-[0.4.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.1...v0.4.0
+[Unreleased]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.1...HEAD
+[0.4.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.0...v0.4.1
 <!-- markdown-link-check-disabled -->
+[0.4.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.1.0...v0.2.0

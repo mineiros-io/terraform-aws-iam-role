@@ -207,6 +207,11 @@ See [variables.tf] and [examples/] for details and use-cases.
   Invalid characters will be replaced with dashes.
   Conflicts with name.
 
+- **`create_policy`**: *(Optional `boolean`)*
+
+  Force creation of inline policy, when `policy_statements` can not be computed. Defaults to
+  true if `policy_statements` is a non-empty list and terraform can compute it.
+
 - **`policy_statements`**: *(Optional `list(statement)`)*
 
   List of IAM policy statements to attach to the role as an inline policy.
