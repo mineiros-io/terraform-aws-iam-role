@@ -81,9 +81,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
   statement {
     effect = "Allow"
 
-    actions = [
-      "sts:AssumeRole"
-    ]
+    actions = var.assume_role_actions
 
     dynamic "principals" {
       for_each = local.assume_role_principals

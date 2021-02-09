@@ -36,6 +36,15 @@ variable "assume_role_conditions" {
   default     = []
 }
 
+variable "assume_role_actions" {
+  type = set(object({
+    type        = string
+    identifiers = list(string)
+  }))
+  description = "(Required if assume_role_policy is not set) Actions for the assume role policy."
+  default     = [ "sts:AssumeRole" ]
+}
+
 
 # ------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS

@@ -159,6 +159,18 @@ See [variables.tf] and [examples/] for details and use-cases.
   ]
   ```
 
+  - **`assume_role_actions`**: *(Optional `list(string)`)*
+
+  A list of strings representing Action in an IAM policy document. Defaults to [ "sts:AssumeRole" ]
+  *(only evaluated when `assume_role_principals` is used)*
+
+  ```hcl
+  assume_role_actions = [
+    "sts:TagSession",
+    "sts:AssumeRoleWithSAML"
+  ]
+  ```
+
 - **`force_detach_policies`**: *(Optional `bool`)*
 
   Specifies to force detaching any policies the role has before destroying it. Defaults to false.
