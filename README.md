@@ -12,7 +12,7 @@ A [Terraform](https://www.terraform.io) base module for creating and managing
 [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
 on [Amazon Web Services (AWS)](https://aws.amazon.com/).
 
-***This module supports Terraform v0.13 as well as v0.12.20 and above
+***This module supports Terraform v0.14 as well as v0.12.20 and above
 and is compatible with the terraform AWS provider v3 as well as v2.0 and above.***
 
 - [Module Features](#module-features)
@@ -343,7 +343,7 @@ Run `make help` to see details on each available target.
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
-Copyright &copy; 2020 [Mineiros GmbH][homepage]
+Copyright &copy; 2021 [Mineiros GmbH][homepage]
 
 <!-- References -->
 
