@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0]
+
+### Added
+
+- feat: add support for Terraform `v0.15`
+- fix: remove ssh agent forwarding in Makefile
+
+### Changed
+
+- feat: upgrade pre-commit hooks to `v0.2.3`
+- build: upgrade build-tools hooks to `v0.11.0`
+
 ## [0.4.2]
 
 ### Added
@@ -19,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build: update secrets in GitHub Actions pipeline
 - build: upgrade build-tools to `v0.9.0`
 - build: upgrade pre-commit-hooks to `v0.2.2`
-- fix: remove ssh agent forwarding in Makefile
 
 ## [0.4.1]
 
@@ -86,11 +97,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- markdown-link-check-disable -->
 
-[unreleased]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.2...HEAD
-[0.4.2]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.1...v0.4.2
+[unreleased]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.2...v0.5.0
 
 <!-- markdown-link-check-disabled -->
 
+[0.4.2]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/mineiros-io/terraform-aws-iam-role/compare/v0.3.0...v0.3.1

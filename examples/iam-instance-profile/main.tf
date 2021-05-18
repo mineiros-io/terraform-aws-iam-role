@@ -24,7 +24,7 @@ variable "region" {
 
 module "instance-profile-s3-full-access" {
   source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.4.2"
+  version = "~> 0.5.0"
 
   # name of the role, policy and instance_profile
   name = "S3FullAccess"
