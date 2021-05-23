@@ -12,7 +12,7 @@ A [Terraform](https://www.terraform.io) base module for creating and managing
 [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
 on [Amazon Web Services (AWS)](https://aws.amazon.com/).
 
-***This module supports Terraform v0.14 as well as v0.12.20 and above
+***This module supports Terraform v0.15, v0.14, v0.13 as well as v0.12.20 and above
 and is compatible with the terraform AWS provider v3 as well as v2.0 and above.***
 
 - [Module Features](#module-features)
@@ -53,7 +53,7 @@ full access to AWS Simple Storage Service (S3)
 ```hcl
 module "role-s3-full-access" {
   source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.4.0"
+  version = "~> 0.5.0"
 
   name = "S3FullAccess"
 
@@ -353,7 +353,7 @@ Copyright &copy; 2021 [Mineiros GmbH][homepage]
 [badge-build]: https://github.com/mineiros-io/terraform-aws-iam-role/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-iam-role.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/Terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-terraform]: https://img.shields.io/badge/terraform-0.15%20|0.14%20|%200.13%20|%200.12.20+-623CE4.svg?logo=terraform
 [badge-tf-aws]: https://img.shields.io/badge/AWS-3%20and%202.0+-F8991D.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
