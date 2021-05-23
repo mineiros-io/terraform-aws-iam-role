@@ -11,32 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- feat: add support for Terraform `v0.15`
-- fix: remove ssh agent forwarding in Makefile
-
-### Changed
-
-- feat: upgrade pre-commit hooks to `v0.2.3`
-- build: upgrade build-tools hooks to `v0.11.0`
+- Add support for Terraform `v0.15`
 
 ## [0.4.2]
 
 ### Added
 
-- feat: feat: add support for Terraform `v0.14.x`
-
-### Changed
-
-- feat: upgrade terratest to `v1.34.0`
-- build: update secrets in GitHub Actions pipeline
-- build: upgrade build-tools to `v0.9.0`
-- build: upgrade pre-commit-hooks to `v0.2.2`
+- Add support for Terraform `v0.14`
 
 ## [0.4.1]
 
 ### Added
 
-- feat: Add create_policy argument to force creating inline policy
+- Add `create_policy` argument to force creating inline policy
 
 ## [0.4.0]
 
@@ -48,13 +35,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Prepare support for Terraform v0.14.x (needs terraform v0.12.20 or above)
+- Prepare support for Terraform `v0.14` (needs terraform `v0.12.20` or above)
 
 ## [0.3.0]
 
 ### Added
 
-- Add support for Terraform v0.13.x
+- Add support for Terraform `v0.13`
 
 ### Changed
 
@@ -67,8 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Add support for Terraform AWS Provider v3.x
-- Update test to test against 3.0 aws provider
+- Add support for Terraform AWS Provider `v3.x`
 
 ## [0.1.0]
 
