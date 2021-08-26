@@ -38,3 +38,8 @@ output "module_enabled" {
   description = "Whether the module is enabled"
   value       = var.module_enabled
 }
+
+output "module_tags" {
+  description = "A map of tags that will be applied to all created resources that accept tags."
+  value       = var.module_tags
+}

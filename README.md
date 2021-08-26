@@ -87,6 +87,12 @@ See [variables.tf] and [examples/] for details and use-cases.
   Specifies whether resources in the module will be created.
   Default is `true`.
 
+- **`module_tags`**: _(Optional `map(string)`)_
+
+  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
+  overwritten by resource-specific tags.
+  Default is `{}`.
+
 - **`module_depends_on`**: *(Optional `list(any)`)*
 
   A list of dependencies.
@@ -196,6 +202,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 - **`tags`**: *(Optional `map(string)`)*
 
   Key-value map of tags for the IAM role.
+  Default is `{}`.
 
 #### Extended Resource configuration
 
@@ -273,6 +280,11 @@ See [variables.tf] and [examples/] for details and use-cases.
 - **`instance_profile_path`**: *(Optional `string`)*
 
   Path in which to create the profile. Default is `/`.
+
+- **`instance_profile_tags`**: *(Optional `map(string)`)*
+
+  Key-value map of tags for the IAM instance profile.
+  Default is `{}`.
 
 ## Module Attributes Reference
 

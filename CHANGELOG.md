@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `module_tags` from template
+- Add `instance_profile_tags` for setting specific tags for the IAM instance profile
+
 ## [0.6.0]
 
 ### Added

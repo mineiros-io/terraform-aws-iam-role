@@ -51,8 +51,8 @@ resource "aws_iam_role" "role" {
   description           = var.description
   max_session_duration  = var.max_session_duration
   permissions_boundary  = var.permissions_boundary
-  tags                  = var.tags
 
+  tags       = merge(var.module_tags, var.tags)
   depends_on = [var.module_depends_on]
 }
 
@@ -166,5 +166,6 @@ resource "aws_iam_instance_profile" "instance_profile" {
 
   role = aws_iam_role.role[0].name
 
+  tags       = merge(var.module_tags, var.instance_profile_tags)
   depends_on = [var.module_depends_on]
 }
