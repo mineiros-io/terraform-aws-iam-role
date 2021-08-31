@@ -104,7 +104,7 @@ variable "permissions_boundary" {
 
 variable "tags" {
   type        = map(string)
-  description = "Key-value map of tags for the IAM role"
+  description = "(Optional) Key-value map of tags for the IAM role"
   default     = {}
 }
 
@@ -168,15 +168,28 @@ variable "instance_profile_path" {
   default     = "/"
 }
 
+variable "instance_profile_tags" {
+  type        = map(string)
+  description = "(Optional) Key-value map of tags for the IAM instance profile"
+  default     = {}
+}
+
 # ------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
 # These variables are used to configure the module.
 # See https://medium.com/mineiros/the-ultimate-guide-on-how-to-write-terraform-modules-part-1-81f86d31f024
 # ------------------------------------------------------------------------------
+
 variable "module_enabled" {
   type        = bool
   description = "(Optional) Whether to create resources within the module or not. Default is true."
   default     = true
+}
+
+variable "module_tags" {
+  type        = map(string)
+  description = "(Optional) A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags."
+  default     = {}
 }
 
 variable "module_depends_on" {
