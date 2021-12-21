@@ -178,23 +178,21 @@ Forces new resource.
   ]
   ```
 
-  The object accepts the following attributes:
+- [**`assume_role_actions`**](#var-assume_role_actions): *(Optional `list(string)`)*<a name="var-assume_role_actions"></a>
 
-  - [**`assume_role_actions`**](#attr-assume_role_actions-assume_role_conditions): *(Optional `list(string)`)*<a name="attr-assume_role_actions-assume_role_conditions"></a>
+  A list of strings representing Action in an IAM policy document. 
+*(only evaluated when `assume_role_principals` is used)*
 
-    A list of strings representing Action in an IAM policy document. 
-    *(only evaluated when `assume_role_principals` is used)*
+  Default is `["sts:AssumeRole"]`.
 
-    Default is `["sts:AssumeRole"]`.
+  Example:
 
-    Example:
-
-    ```hcl
-    assume_role_actions = [
-      "sts:TagSession",
-      "sts:AssumeRoleWithSAML"
-    ]
-    ```
+  ```hcl
+  assume_role_actions = [
+    "sts:TagSession",
+    "sts:AssumeRoleWithSAML"
+  ]
+  ```
 
 - [**`force_detach_policies`**](#var-force_detach_policies): *(Optional `bool`)*<a name="var-force_detach_policies"></a>
 

@@ -213,21 +213,21 @@ section {
               }
             ]
           END
+        }
 
-          attribute "assume_role_actions" {
-            type           = list(string)
-            default        = ["sts:AssumeRole"]
-            description    = <<-END
-              A list of strings representing Action in an IAM policy document. 
-              *(only evaluated when `assume_role_principals` is used)*
-            END
-            readme_example = <<-END
-              assume_role_actions = [
-                "sts:TagSession",
-                "sts:AssumeRoleWithSAML"
-              ]
-            END
-          }
+        variable "assume_role_actions" {
+          type           = list(string)
+          default        = ["sts:AssumeRole"]
+          description    = <<-END
+            A list of strings representing Action in an IAM policy document. 
+            *(only evaluated when `assume_role_principals` is used)*
+          END
+          readme_example = <<-END
+            assume_role_actions = [
+              "sts:TagSession",
+              "sts:AssumeRoleWithSAML"
+            ]
+          END
         }
 
         variable "force_detach_policies" {
