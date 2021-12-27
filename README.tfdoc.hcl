@@ -113,16 +113,14 @@ section {
         type        = map(string)
         default     = {}
         description = <<-END
-          A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
-            overwritten by resource-specific tags.
+          A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags.
         END
       }
 
       variable "module_depends_on" {
         type        = list(any)
         description = <<-END
-          A list of dependencies.
-            Any object can be assigned to this list to define a hidden external dependency.
+          A list of dependencies. Any object can be assigned to this list to define a hidden external dependency.
         END
       }
     }
@@ -191,7 +189,8 @@ section {
           END
           readme_example = <<-END
             assume_role_principals = [
-              { type        = "Service"
+              {
+                type        = "Service"
                 identifiers = [ "ec2.amazonaws.com" ]
               }
             ]
@@ -207,7 +206,8 @@ section {
           END
           readme_example = <<-END
             assume_role_conditions = [
-              { test     = "Bool"
+              {
+                test     = "Bool"
                 variable = "aws:MultiFactorAuthPresent"
                 values   = [ "true" ]
               }
