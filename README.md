@@ -93,15 +93,13 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`module_tags`**](#var-module_tags): *(Optional `map(string)`)*<a name="var-module_tags"></a>
 
-  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
-  overwritten by resource-specific tags.
+  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags.
 
   Default is `{}`.
 
 - [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(any)`)*<a name="var-module_depends_on"></a>
 
-  A list of dependencies.
-  Any object can be assigned to this list to define a hidden external dependency.
+  A list of dependencies. Any object can be assigned to this list to define a hidden external dependency.
 
 ### Top-level Arguments
 
@@ -110,22 +108,22 @@ See [variables.tf] and [examples/] for details and use-cases.
 - [**`name`**](#var-name): *(Optional `string`)*<a name="var-name"></a>
 
   The name of the role.
-Invalid characters will be replaced with dashes.
-If omitted, Terraform will assign a random, unique name.
-Forces new resource.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
+  Forces new resource.
 
 - [**`name_prefix`**](#var-name_prefix): *(Optional `string`)*<a name="var-name_prefix"></a>
 
   If omitted, Terraform will assign a random, unique name.
-Invalid characters will be replaced with dashes.
-Creates a unique name beginning with the specified prefix.
-Conflicts with name.
-Forces new resource.
+  Invalid characters will be replaced with dashes.
+  Creates a unique name beginning with the specified prefix.
+  Conflicts with name.
+  Forces new resource.
 
-- [**`assume_role_policy`**](#var-assume_role_policy): *(**Required** `string(json)`)*<a name="var-assume_role_policy"></a>
+- [**`assume_role_policy`**](#var-assume_role_policy): *(**Required** `string`)*<a name="var-assume_role_policy"></a>
 
   A JSON String representing the policy that grants an entity permission to assume the role.
-*(only required if `assume_role_principals` is not set)*
+  *(only required if `assume_role_principals` is not set)*
 
   Example:
 
@@ -150,13 +148,14 @@ Forces new resource.
 - [**`assume_role_principals`**](#var-assume_role_principals): *(**Required** `set(principal)`)*<a name="var-assume_role_principals"></a>
 
   A Set of objects representing Principals in an IAM policy document.
-*(only required if `assume_role_policy` is not set)*
+  *(only required if `assume_role_policy` is not set)*
 
   Example:
 
   ```hcl
   assume_role_principals = [
-    { type        = "Service"
+    {
+      type        = "Service"
       identifiers = [ "ec2.amazonaws.com" ]
     }
   ]
@@ -165,13 +164,14 @@ Forces new resource.
 - [**`assume_role_conditions`**](#var-assume_role_conditions): *(Optional `set(condition)`)*<a name="var-assume_role_conditions"></a>
 
   A Set of objects representing Conditions in an IAM policy document.
-*(only evaluated when `assume_role_principals` is used)*
+  *(only evaluated when `assume_role_principals` is used)*
 
   Example:
 
   ```hcl
   assume_role_conditions = [
-    { test     = "Bool"
+    {
+      test     = "Bool"
       variable = "aws:MultiFactorAuthPresent"
       values   = [ "true" ]
     }
@@ -181,7 +181,7 @@ Forces new resource.
 - [**`assume_role_actions`**](#var-assume_role_actions): *(Optional `list(string)`)*<a name="var-assume_role_actions"></a>
 
   A list of strings representing Action in an IAM policy document. 
-*(only evaluated when `assume_role_principals` is used)*
+  *(only evaluated when `assume_role_principals` is used)*
 
   Default is `["sts:AssumeRole"]`.
 
@@ -213,8 +213,8 @@ Forces new resource.
 - [**`max_session_duration`**](#var-max_session_duration): *(Optional `number`)*<a name="var-max_session_duration"></a>
 
   The maximum session duration (in seconds) that you want to set for the specified role.
-If you do not specify a value for this setting, the default maximum of one hour is applied.
-This setting can have a value from 1 hour to 12 - hours.
+  If you do not specify a value for this setting, the default maximum of one hour is applied.
+  This setting can have a value from 1 hour to 12 - hours.
 
   Default is `3600`.
 
@@ -243,14 +243,14 @@ This setting can have a value from 1 hour to 12 - hours.
 - [**`policy_name`**](#var-policy_name): *(Optional `string`)*<a name="var-policy_name"></a>
 
   The name of the role policy.
-Invalid characters will be replaced with dashes.
-If omitted, Terraform will assign a random, unique name.
+  Invalid characters will be replaced with dashes.
+  If omitted, Terraform will assign a random, unique name.
 
 - [**`policy_name_prefix`**](#var-policy_name_prefix): *(Optional `string`)*<a name="var-policy_name_prefix"></a>
 
   Creates a unique name beginning with the specified prefix.
-Invalid characters will be replaced with dashes.
-Conflicts with name.
+  Invalid characters will be replaced with dashes.
+  Conflicts with name.
 
 - [**`create_policy`**](#var-create_policy): *(Optional `bool`)*<a name="var-create_policy"></a>
 
@@ -266,15 +266,15 @@ Conflicts with name.
   policy_statements = [
     {
       sid = "FullS3Access"
-  
+
       effect = "Allow"
-  
+
       actions     = [ "s3:*" ]
       not_actions = []
-  
+
       resources     = [ "*" ]
       not_resources = []
-  
+
       conditions = [
         { test     = "Bool"
           variable = "aws:MultiFactorAuthPresent"
@@ -298,9 +298,9 @@ Conflicts with name.
 - [**`instance_profile_name_prefix`**](#var-instance_profile_name_prefix): *(Optional `string`)*<a name="var-instance_profile_name_prefix"></a>
 
   Creates a unique name beginning with the specified prefix.
-Invalid characters will be replaced with dashes.
-Conflicts with name.
-Forces new resource.
+  Invalid characters will be replaced with dashes.
+  Conflicts with name.
+  Forces new resource.
 
 - [**`instance_profile_path`**](#var-instance_profile_path): *(Optional `string`)*<a name="var-instance_profile_path"></a>
 
@@ -318,10 +318,21 @@ Forces new resource.
 
 The following attributes are exported by the module:
 
-- **`role`**: The `aws_iam_role` object.
-- **`policy`**: The `aws_iam_role_policy` object.
-- **`policy_attachments`**: An array of `aws_iam_role_policy_attachment` objects.
-- **`instance_profile`**: The `aws_iam_instance_profile` object.
+- [**`role`**](#output-role): *(`object(role)`)*<a name="output-role"></a>
+
+  The `aws_iam_role` object.
+
+- [**`policy`**](#output-policy): *(`object(policy)`)*<a name="output-policy"></a>
+
+  The `aws_iam_role_policy` object.
+
+- [**`policy_attachments`**](#output-policy_attachments): *(`list(policy_attachment)`)*<a name="output-policy_attachments"></a>
+
+  An array of `aws_iam_role_policy_attachment` objects.
+
+- [**`instance_profile`**](#output-instance_profile): *(`object(instance_profile)`)*<a name="output-instance_profile"></a>
+
+  The `aws_iam_instance_profile` object.
 
 ## External Documentation
 

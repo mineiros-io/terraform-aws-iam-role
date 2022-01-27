@@ -154,8 +154,7 @@ section {
 
         variable "assume_role_policy" {
           required       = true
-          type           = any
-          readme_type    = "string(json)"
+          type           = string
           description    = <<-END
             A JSON String representing the policy that grants an entity permission to assume the role.
             *(only required if `assume_role_principals` is not set)*
@@ -181,8 +180,7 @@ section {
 
         variable "assume_role_principals" {
           required       = true
-          type           = any
-          readme_type    = "set(principal)"
+          type           = set(principal)
           description    = <<-END
             A Set of objects representing Principals in an IAM policy document.
             *(only required if `assume_role_policy` is not set)*
@@ -198,8 +196,7 @@ section {
         }
 
         variable "assume_role_conditions" {
-          type           = any
-          readme_type    = "set(condition)"
+          type           = set(condition)
           description    = <<-END
             A Set of objects representing Conditions in an IAM policy document.
             *(only evaluated when `assume_role_principals` is used)*
@@ -323,8 +320,7 @@ section {
           }
 
           variable "policy_statements" {
-            type           = any
-            readme_type    = "list(statement)"
+            type           = list(statement)
             description    = <<-END
               List of IAM policy statements to attach to the role as an inline policy.
             END
@@ -404,12 +400,35 @@ section {
     title   = "Module Outputs"
     content = <<-END
       The following attributes are exported by the module:
-
-      - **`role`**: The `aws_iam_role` object.
-      - **`policy`**: The `aws_iam_role_policy` object.
-      - **`policy_attachments`**: An array of `aws_iam_role_policy_attachment` objects.
-      - **`instance_profile`**: The `aws_iam_instance_profile` object.
     END
+
+    output "role" {
+      type        = object(role)
+      description = <<-END
+        The `aws_iam_role` object.
+      END
+    }
+
+    output "policy" {
+      type        = object(policy)
+      description = <<-END
+        The `aws_iam_role_policy` object.
+      END
+    }
+
+    output "policy_attachments" {
+      type        = list(policy_attachment)
+      description = <<-END
+        An array of `aws_iam_role_policy_attachment` objects.
+      END
+    }
+
+    output "instance_profile" {
+      type        = object(instance_profile)
+      description = <<-END
+        The `aws_iam_instance_profile` object.
+      END
+    }
   }
 
   section {
