@@ -55,8 +55,7 @@ full access to AWS Simple Storage Service (S3)
 
 ```hcl
 module "role-s3-full-access" {
-  source  = "mineiros-io/iam-role/aws"
-  version = "~> 0.6.0"
+  source  = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.6.1"
 
   name = "S3FullAccess"
 
@@ -97,7 +96,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `{}`.
 
-- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(any)`)*<a name="var-module_depends_on"></a>
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(object)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be assigned to this list to define a hidden external dependency.
 
