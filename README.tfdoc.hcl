@@ -66,7 +66,8 @@ section {
 
       ```hcl
       module "role-s3-full-access" {
-        source  = "git@github.com:mineiros-io/terraform-aws-iam-role.git?ref=v0.6.1"
+        source = "mineiros-io/iam-role/aws"
+        version = "~> 0.6.1"
 
         name = "S3FullAccess"
 
